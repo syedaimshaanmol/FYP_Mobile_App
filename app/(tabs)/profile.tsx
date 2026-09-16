@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  Image,
   ActivityIndicator,
   Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import * as ImagePicker from 'expo-image-picker';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
-import { CreovatorCard } from '../../components/creovator/CreovatorCard';
 import { CreovatorButton } from '../../components/creovator/CreovatorButton';
+import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
 
 interface UserProfileData {
@@ -145,8 +145,14 @@ export default function ProfileTab() {
           text: 'Sign Out',
           style: 'destructive',
           onPress: async () => {
-            await supabase.auth.signOut();
-            router.replace('/login-selection');
+            try {
+              await supabase.auth.signOut();
+            } catch (err) {
+              console.error('Sign out error:', err);
+            } finally {
+              router.dismissAll();
+              router.replace('/login-selection');
+            }
           },
         },
       ]

@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, ActivityIndicator, StyleSheet, Image, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { supabase } from '@/lib/supabase';
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   logo: {
-    width: 220,
-    height: 70,
+    width: 280,
+    height: 90,
     marginBottom: 20,
   },
   loader: {

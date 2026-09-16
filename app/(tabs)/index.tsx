@@ -1,19 +1,19 @@
-﻿import React, { useEffect, useState, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  RefreshControl,
-  Image,
-} from 'react-native';
-import { useRouter, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
+import { CreovatorButton, CreovatorCard, CreovatorHeader } from '@/components/creovator';
 import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorCard, CreovatorButton } from '@/components/creovator';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, useRouter } from 'expo-router';
+import React, { useCallback, useState } from 'react';
+import {
+    ActivityIndicator,
+    Image,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 
 interface EventTypeCount {
   type: string;
@@ -344,11 +344,11 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   profileButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     overflow: 'hidden',
-    borderWidth: 1.5,
+    borderWidth: 2,
     borderColor: CreovatorTheme.colors.primary,
   },
   avatar: {
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   avatarInitial: {
     color: '#ffffff',
     fontWeight: '800',
-    fontSize: 16,
+    fontSize: 20,
   },
   welcomeSection: {
     marginVertical: 12,

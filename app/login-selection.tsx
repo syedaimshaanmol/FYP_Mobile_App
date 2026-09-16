@@ -1,4 +1,4 @@
-﻿import { useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import {
   StyleSheet,
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   logo: {
-    width: 200,
-    height: 60,
+    width: 260,
+    height: 80,
     marginBottom: 16,
   },
   badgeContainer: {

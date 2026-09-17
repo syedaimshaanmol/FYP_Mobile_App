@@ -1,5 +1,5 @@
-﻿import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import React, { useState, useEffect } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -20,9 +20,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function UserLogin() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ mode?: string }>();
   const insets = useSafeAreaInsets();
 
-  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>(
+    params.mode === 'signup' ? 'signup' : 'login'
+  );
+
+  useEffect(() => {
+    if (params.mode === 'signup') {
+      setMode('signup');
+    }
+  }, [params.mode]);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

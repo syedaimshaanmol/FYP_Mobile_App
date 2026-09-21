@@ -1,25 +1,26 @@
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import React, { useState, useEffect } from 'react';
+import { CreovatorButton, CreovatorInput } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Image,
+  View
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorInput, CreovatorButton } from '@/components/creovator';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function UserLogin() {
   const router = useRouter();
+  const r = useResponsive();;
   const params = useLocalSearchParams<{ mode?: string }>();
   const insets = useSafeAreaInsets();
 

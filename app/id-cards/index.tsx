@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { CreovatorButton, CreovatorCard, CreovatorHeader } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
   Alert,
   Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import QRCode from 'react-native-qrcode-svg';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorButton, CreovatorCard } from '@/components/creovator';
 
 const { width } = Dimensions.get('window');
 
@@ -66,6 +66,7 @@ const ID_TEMPLATES: IdTemplate[] = [
 
 export default function IdCardsScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const searchParams = useLocalSearchParams();
   const eventIdParam = searchParams.event_id as string;
   const listNameParam = searchParams.list_name as string;

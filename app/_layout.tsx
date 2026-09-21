@@ -4,6 +4,8 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { LogBox, Platform } from 'react-native';
 import 'react-native-reanimated';
+import { useResponsive } from '@/constants/useResponsive';
+
 
 // Disables LogBox specifically for Web to prevent Metro LogContext crash
 if (Platform.OS === 'web') {

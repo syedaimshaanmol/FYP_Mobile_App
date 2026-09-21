@@ -1,15 +1,16 @@
-﻿import React, { useState } from 'react';
+﻿import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
 import {
-  View,
-  TextInput,
-  Text,
   StyleSheet,
-  TouchableOpacity,
+  Text,
+  TextInput,
   TextInputProps,
+  TouchableOpacity,
+  View,
   ViewStyle,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { CreovatorTheme } from '@/constants/theme';
 
 interface CreovatorInputProps extends TextInputProps {
   label?: string;
@@ -30,20 +31,29 @@ export const CreovatorInput: React.FC<CreovatorInputProps> = ({
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const r = useResponsive(); // ⭐ shared responsive helper
+
+  const inputHeight = r.size(0.125, 46, 54);
+  const fontSize = r.font(0.038, 14, 16);
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && (
+        <Text style={styles.label} numberOfLines={1} adjustsFontSizeToFit>
+          {label}
+        </Text>
+      )}
       <View
         style={[
           styles.inputContainer,
+          { minHeight: inputHeight },
           isFocused && styles.inputFocused,
           !!error && styles.inputError,
         ]}
       >
         {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
         <TextInput
-          style={[styles.input, style]}
+          style={[styles.input, { fontSize }, style]}
           placeholderTextColor={CreovatorTheme.colors.textDim}
           secureTextEntry={isPassword && !showPassword}
           onFocus={() => setIsFocused(true)}
@@ -64,7 +74,11 @@ export const CreovatorInput: React.FC<CreovatorInputProps> = ({
           </TouchableOpacity>
         )}
       </View>
-      {error && <Text style={styles.errorText}>{error}</Text>}
+      {error && (
+        <Text style={styles.errorText} numberOfLines={2}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
@@ -72,6 +86,7 @@ export const CreovatorInput: React.FC<CreovatorInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     marginBottom: 16,
+    width: '100%', // ⭐ never overflows its parent
   },
   label: {
     fontSize: 13,
@@ -87,7 +102,6 @@ const styles = StyleSheet.create({
     borderColor: CreovatorTheme.colors.inputBorder,
     borderRadius: 14,
     paddingHorizontal: 14,
-    minHeight: 50,
   },
   inputFocused: {
     borderColor: CreovatorTheme.colors.primary,
@@ -101,8 +115,8 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
+    minWidth: 0, // ⭐ lets long typed text scroll inside instead of stretching the row
     color: CreovatorTheme.colors.textWhite,
-    fontSize: 15,
     paddingVertical: 12,
   },
   eyeButton: {

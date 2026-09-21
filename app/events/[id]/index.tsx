@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  RefreshControl,
-  Alert,
-} from 'react-native';
-import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
+import { CreovatorHeader } from '@/components/creovator';
 import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorCard } from '@/components/creovator';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useCallback, useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 interface EventDetail {
   id: string;
@@ -33,6 +34,7 @@ interface WorkspaceStats {
 
 export default function EventWorkspaceScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const { id } = useLocalSearchParams();
   const eventId = id as string;
 

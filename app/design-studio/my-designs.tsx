@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
 import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
+  FlatList,
   RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
 import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
 
 interface SavedDesign {
@@ -27,6 +28,7 @@ interface SavedDesign {
 
 export default function MyDesignsScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const [designs, setDesigns] = useState<SavedDesign[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);

@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { CreovatorTheme } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useResponsive } from '@/constants/useResponsive';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -32,6 +33,12 @@ export const CreovatorHeader: React.FC<CreovatorHeaderProps> = ({
 }) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const r = useResponsive(); // ⭐ shared responsive helper
+
+  // Logo scales with screen width instead of a fixed 180x48
+  const logoWidth = r.size(0.42, 130, 190);
+  const logoHeight = logoWidth * (48 / 180); // keep original aspect ratio
+  const titleSize = r.font(0.05, 16, 20);
 
   const handleBack = () => {
     if (onBackPress) {
@@ -44,7 +51,7 @@ export const CreovatorHeader: React.FC<CreovatorHeaderProps> = ({
   };
 
   return (
-    <View style={[styles.container, { paddingTop: Math.max(insets.top, 16) }]}>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top, 16), paddingHorizontal: r.pad }]}>
       <View style={styles.content}>
         <View style={styles.leftSection}>
           {showBack && (
@@ -56,12 +63,16 @@ export const CreovatorHeader: React.FC<CreovatorHeaderProps> = ({
           {showLogo ? (
             <Image
               source={require('@/assets/images/creovator-logo.png')}
-              style={styles.logo}
+              style={{ width: logoWidth, height: logoHeight }}
               resizeMode="contain"
             />
           ) : (
-            <View>
-              {title && <Text style={styles.title} numberOfLines={1}>{title}</Text>}
+            <View style={styles.titleWrap}>
+              {title && (
+                <Text style={[styles.title, { fontSize: titleSize }]} numberOfLines={1} adjustsFontSizeToFit>
+                  {title}
+                </Text>
+              )}
               {subtitle && <Text style={styles.subtitle} numberOfLines={1}>{subtitle}</Text>}
             </View>
           )}
@@ -88,7 +99,6 @@ const styles = StyleSheet.create({
     backgroundColor: CreovatorTheme.colors.bgDark,
     borderBottomWidth: 1,
     borderBottomColor: CreovatorTheme.colors.cardBorder,
-    paddingHorizontal: 16,
     paddingBottom: 12,
   },
   content: {
@@ -101,6 +111,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    minWidth: 0, // ⭐ lets title/logo shrink instead of pushing rightAction off-screen
+  },
+  titleWrap: {
+    flexShrink: 1,
   },
   backButton: {
     width: 38,
@@ -111,12 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 12,
   },
-  logo: {
-    width: 180,
-    height: 48,
-  },
   title: {
-    fontSize: 20,
     fontWeight: '800',
     color: CreovatorTheme.colors.textWhite,
     letterSpacing: 0.3,

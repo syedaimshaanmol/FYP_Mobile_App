@@ -1,3 +1,4 @@
+import { useResponsive } from '@/constants/useResponsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
@@ -31,6 +32,7 @@ interface UserProfileData {
 
 export default function ProfileTab() {
   const router = useRouter();
+  const r = useResponsive();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);

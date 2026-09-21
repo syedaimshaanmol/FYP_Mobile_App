@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-  RefreshControl,
-  Alert,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
+import { useResponsive } from '@/constants/useResponsive';
 
 interface AdminStats {
   totalManagers: number;
@@ -26,6 +27,7 @@ interface AdminStats {
 
 export default function AdminDashboardScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const [stats, setStats] = useState<AdminStats>({
     totalManagers: 0,
     totalEvents: 0,

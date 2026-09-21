@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle, StyleProp, TouchableOpacity } from 'react-native';
 import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
 
 interface CreovatorCardProps {
   children: React.ReactNode;
@@ -15,7 +16,16 @@ export const CreovatorCard: React.FC<CreovatorCardProps> = ({
   onPress,
   glow = 'none',
 }) => {
-  const cardStyles: any[] = [styles.card];
+  const r = useResponsive(); // ⭐ shared responsive helper
+
+  // Padding/radius scale gently with screen width so cards don't feel
+  // cramped on small phones or oddly tiny on tablets.
+  const dynamicCard = {
+    borderRadius: r.size(0.055, 16, 22),
+    padding: r.size(0.045, 14, 18),
+  };
+
+  const cardStyles: any[] = [styles.card, dynamicCard];
 
   if (glow === 'primary') {
     cardStyles.push(styles.glowPrimary);
@@ -45,9 +55,8 @@ const styles = StyleSheet.create({
     backgroundColor: CreovatorTheme.colors.bgCard,
     borderWidth: 1,
     borderColor: CreovatorTheme.colors.cardBorder,
-    borderRadius: 22,
-    padding: 18,
     marginBottom: 14,
+    width: '100%', // ⭐ never overflows its parent, no matter the screen
   },
   glowPrimary: {
     borderColor: CreovatorTheme.colors.primaryGlow,

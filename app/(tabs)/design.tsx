@@ -1,23 +1,24 @@
+import { useResponsive } from '@/constants/useResponsive';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
 import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
 import {
-  designTemplates,
   categoryLabels,
   DesignCategory,
   DesignTemplate,
+  designTemplates,
 } from '../../constants/designTemplates';
+import { CreovatorColors } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 44) / 2;
@@ -33,6 +34,7 @@ const CATEGORIES: (DesignCategory | 'all')[] = [
 
 export default function DesignStudioTab() {
   const router = useRouter();
+  const r = useResponsive();
   const [activeCategory, setActiveCategory] = useState<DesignCategory | 'all'>('all');
 
   const filtered =

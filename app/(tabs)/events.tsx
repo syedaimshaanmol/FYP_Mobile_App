@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-  RefreshControl,
-  Alert,
-  Modal,
-} from 'react-native';
-import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
+import { CreovatorButton, CreovatorCard, CreovatorHeader, CreovatorInput } from '@/components/creovator';
 import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorInput, CreovatorButton, CreovatorCard } from '@/components/creovator';
+import { useResponsive } from '@/constants/useResponsive';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Modal,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export interface EventItem {
   id: string;
@@ -39,6 +40,7 @@ const CATEGORIES = [
 export default function EventsScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const r = useResponsive();
 
   const [activeCategory, setActiveCategory] = useState<string>((params.type as string) || 'all');
   const [events, setEvents] = useState<EventItem[]>([]);

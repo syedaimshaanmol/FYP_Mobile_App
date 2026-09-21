@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TextInput,
-  ActivityIndicator,
-  RefreshControl,
-  Image,
-} from 'react-native';
-import { useRouter } from 'expo-router';
+import { useResponsive } from '@/constants/useResponsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
 
 interface OrganizerProfile {
@@ -28,6 +29,7 @@ interface OrganizerProfile {
 
 export default function AdminOrganizersScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const [organizers, setOrganizers] = useState<OrganizerProfile[]>([]);
   const [filtered, setFiltered] = useState<OrganizerProfile[]>([]);
   const [search, setSearch] = useState('');

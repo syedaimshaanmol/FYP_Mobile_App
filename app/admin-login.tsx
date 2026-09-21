@@ -1,26 +1,26 @@
-﻿import { useRouter } from 'expo-router';
+﻿import { CreovatorButton, CreovatorInput } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
 import {
-  ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorInput, CreovatorButton } from '@/components/creovator';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function AdminLogin() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const r = useResponsive();;
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

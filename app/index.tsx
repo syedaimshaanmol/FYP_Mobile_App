@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
-import { View, ActivityIndicator, StyleSheet, Image, Text } from 'react-native';
-import { useRouter } from 'expo-router';
-import { supabase } from '@/lib/supabase';
 import { CreovatorTheme } from '@/constants/theme';
+import { supabase } from '@/lib/supabase';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { useResponsive } from '@/constants/useResponsive';
 
 export default function EntryScreen() {
   const router = useRouter();
+   const r = useResponsive();;
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {

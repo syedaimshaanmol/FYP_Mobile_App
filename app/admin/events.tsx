@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TextInput,
-  ActivityIndicator,
-  RefreshControl,
-  TouchableOpacity,
-} from 'react-native';
-import { useRouter } from 'expo-router';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
-import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { CreovatorCard } from '../../components/creovator/CreovatorCard';
+import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
+import { useResponsive } from '@/constants/useResponsive';
 
 interface PlatformEvent {
   id: string;
@@ -29,6 +30,7 @@ interface PlatformEvent {
 
 export default function AdminEventsScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const [events, setEvents] = useState<PlatformEvent[]>([]);
   const [filtered, setFiltered] = useState<PlatformEvent[]>([]);
   const [search, setSearch] = useState('');

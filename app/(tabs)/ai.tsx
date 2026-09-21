@@ -1,23 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
   ActivityIndicator,
   Alert,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { CreovatorColors } from '../../constants/theme';
 import { CreovatorHeader } from '../../components/creovator/CreovatorHeader';
-import { CreovatorCard } from '../../components/creovator/CreovatorCard';
-import { CreovatorButton } from '../../components/creovator/CreovatorButton';
+import { CreovatorColors } from '../../constants/theme';
 import { supabase } from '../../lib/supabase';
+
+
 
 const CONTENT_TYPES = [
   'Invitation Email',
@@ -45,6 +46,8 @@ interface ChatSession {
 export default function AIStudioTab() {
   const router = useRouter();
   const scrollViewRef = useRef<ScrollView>(null);
+  const r = useResponsive();
+
 
   const [selectedType, setSelectedType] = useState(CONTENT_TYPES[0]);
   const [prompt, setPrompt] = useState('');

@@ -1,23 +1,38 @@
+import { CreovatorTheme } from '@/constants/theme';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
 import {
   Animated,
   Easing,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
-  Image,
-  Dimensions,
 } from 'react-native';
-import { CreovatorTheme } from '@/constants/theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-const { width: SCREEN_W } = Dimensions.get('window');
 
 export default function LoginSelection() {
   const router = useRouter();
+  const r = useResponsive();;
   const insets = useSafeAreaInsets();
+
+  // ⭐ Reactive dimensions — updates on rotation / web resize (unlike Dimensions.get)
+  const { width: SCREEN_W, height: SCREEN_H } = useWindowDimensions();
+
+  // Clamp helper so nothing gets too tiny (small phones) or too huge (tablets/web)
+  const clamp = (val: number, min: number, max: number) =>
+    Math.min(Math.max(val, min), max);
+
+  // Everything below is derived from current screen width instead of hardcoded px
+  const isSmallScreen = SCREEN_W < 360;
+  const contentMaxWidth = 440; // keeps things from stretching too wide on tablets/web
+  const logoAreaSize = clamp(SCREEN_W * 0.38, 120, 170);
+  const logoSize = logoAreaSize * 0.75;
+  const appNameSize = clamp(SCREEN_W * 0.09, 26, 36);
+  const taglineSize = clamp(SCREEN_W * 0.034, 12, 14);
 
   // Spin animation
   const spinValue = useRef(new Animated.Value(0)).current;
@@ -69,40 +84,71 @@ export default function LoginSelection() {
   });
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 20, paddingBottom: insets.bottom + 24 }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: insets.top + 20,
+          paddingBottom: insets.bottom + 24,
+          paddingHorizontal: isSmallScreen ? 18 : 28,
+        },
+      ]}
+    >
       {/* Background glow blobs */}
       <View style={styles.glowTop} />
       <View style={styles.glowBottom} />
       <View style={styles.glowCenter} />
 
-      <Animated.View style={[styles.contentWrap, { opacity: fadeValue }]}>
+      <Animated.View
+        style={[
+          styles.contentWrap,
+          { opacity: fadeValue, maxWidth: contentMaxWidth },
+        ]}
+      >
         {/* Animated logo area */}
-        <View style={styles.logoArea}>
+        <View
+          style={[
+            styles.logoArea,
+            { width: logoAreaSize, height: logoAreaSize, marginBottom: SCREEN_H * 0.035 },
+          ]}
+        >
           {/* Outer glow ring */}
           <Animated.View
             style={[
               styles.glowRing,
-              { transform: [{ scale: pulseValue }] },
+              {
+                width: logoAreaSize,
+                height: logoAreaSize,
+                borderRadius: logoAreaSize / 2,
+                transform: [{ scale: pulseValue }],
+              },
             ]}
           />
           {/* Logo with spin */}
           <Animated.View style={{ transform: [{ rotate: spin }] }}>
             <Image
               source={require('@/assets/images/creovator-logo.png')}
-              style={styles.logo}
+              style={{ width: logoSize, height: logoSize }}
               resizeMode="contain"
             />
           </Animated.View>
         </View>
 
         {/* App name & tagline */}
-        <Text style={styles.appName}>Creovator</Text>
-        <Text style={styles.tagline}>
+        <Text
+          style={[styles.appName, { fontSize: appNameSize }]}
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          minimumFontScale={0.7}
+        >
+          Creovator
+        </Text>
+        <Text style={[styles.tagline, { fontSize: taglineSize }]}>
           Smart Event Organization &amp; Automation
         </Text>
 
         {/* Divider */}
-        <View style={styles.divider} />
+        <View style={[styles.divider, { width: '55%' }]} />
 
         {/* Buttons */}
         <View style={styles.buttonsContainer}>
@@ -133,8 +179,8 @@ export default function LoginSelection() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
     backgroundColor: CreovatorTheme.colors.bgDark,
-    paddingHorizontal: 28,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -168,48 +214,40 @@ const styles = StyleSheet.create({
   contentWrap: {
     width: '100%',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   logoArea: {
-    width: 160,
-    height: 160,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 28,
   },
   glowRing: {
     position: 'absolute',
-    width: 160,
-    height: 160,
-    borderRadius: 80,
     borderWidth: 2,
     borderColor: 'rgba(99, 102, 241, 0.35)',
     backgroundColor: 'rgba(99, 102, 241, 0.07)',
   },
-  logo: {
-    width: 120,
-    height: 120,
-  },
   appName: {
-    fontSize: 36,
     fontWeight: '900',
     color: CreovatorTheme.colors.textWhite,
     letterSpacing: 1,
     marginBottom: 8,
     textAlign: 'center',
+    flexShrink: 1,
+    maxWidth: '100%',
   },
   tagline: {
-    fontSize: 13,
     color: CreovatorTheme.colors.textMuted,
     textAlign: 'center',
     lineHeight: 20,
-    paddingHorizontal: 20,
-    marginBottom: 36,
+    paddingHorizontal: 12,
+    marginBottom: 30,
+    flexShrink: 1,
+    maxWidth: '100%',
   },
   divider: {
-    width: SCREEN_W * 0.55,
     height: 1,
     backgroundColor: 'rgba(255,255,255,0.1)',
-    marginBottom: 36,
+    marginBottom: 30,
   },
   buttonsContainer: {
     width: '100%',

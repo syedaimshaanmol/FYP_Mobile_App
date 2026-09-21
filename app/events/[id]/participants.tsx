@@ -1,27 +1,26 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-  Modal,
-  Alert,
-  ScrollView,
-  Platform,
-  Linking,
-} from 'react-native';
-import { useRouter, useLocalSearchParams, useFocusEffect } from 'expo-router';
+import { CreovatorButton, CreovatorCard, CreovatorHeader, CreovatorInput } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { supabase } from '@/lib/supabase';
 import { Ionicons } from '@expo/vector-icons';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system/legacy';
+import { useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import * as Sharing from 'expo-sharing';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
+import {
+  ActivityIndicator,
+  Alert,
+  FlatList,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import * as XLSX from 'xlsx';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorInput, CreovatorButton, CreovatorCard } from '@/components/creovator';
-
 export interface Participant {
   id: string;
   event_id: string;
@@ -38,6 +37,7 @@ const TECH_DEFAULT_LISTS = ['Exhibitors', 'Judges', 'Volunteers', 'Visitors'];
 
 export default function EventParticipantsScreen() {
   const router = useRouter();
+  const r = useResponsive();;
   const { id } = useLocalSearchParams();
   const eventId = id as string;
 

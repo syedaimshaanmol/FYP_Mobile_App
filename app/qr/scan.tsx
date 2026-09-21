@@ -1,22 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { CreovatorButton, CreovatorCard, CreovatorHeader, CreovatorInput } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useState } from 'react';
+
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   ActivityIndicator,
   Alert,
   Dimensions,
   ScrollView,
-  Platform,
+  StyleSheet,
+  Text,
+  View
 } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
-import { CameraView, useCameraPermissions } from 'expo-camera';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorInput, CreovatorButton, CreovatorCard } from '@/components/creovator';
-
 const { width } = Dimensions.get('window');
 
 interface QrPayload {
@@ -38,6 +37,7 @@ type ScanStatus = 'idle' | 'scanning' | 'success' | 'already' | 'error';
 
 export default function QrScanScreen() {
   const router = useRouter();
+   const r = useResponsive();;
   const searchParams = useLocalSearchParams();
   const preselectedEventId = searchParams.event_id as string;
 

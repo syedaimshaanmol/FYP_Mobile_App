@@ -1,18 +1,19 @@
 import { CreovatorButton, CreovatorCard, CreovatorHeader } from '@/components/creovator';
 import { CreovatorTheme } from '@/constants/theme';
+import { useResponsive } from '@/constants/useResponsive';
 import { supabase } from '@/lib/supabase';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import {
-    ActivityIndicator,
-    Image,
-    RefreshControl,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Image,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 interface EventTypeCount {
@@ -46,6 +47,7 @@ const TYPE_LABELS: Record<string, string> = {
 
 export default function DashboardScreen() {
   const router = useRouter();
+  const r = useResponsive();
 
   const [userName, setUserName] = useState('Organizer');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);

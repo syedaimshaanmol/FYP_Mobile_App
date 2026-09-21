@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
 import {
   ActivityIndicator,
   Alert,
@@ -50,6 +51,7 @@ const TEMPLATES = [
 
 export default function EmailAutomationScreen() {
   const router = useRouter();
+  const r = useResponsive();
   const params = useLocalSearchParams<{ event_id?: string; prefill_subject?: string; prefill_content?: string }>();
 
   const [events, setEvents] = useState<EventItem[]>([]);

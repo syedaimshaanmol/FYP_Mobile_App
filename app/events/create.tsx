@@ -1,19 +1,20 @@
+import { CreovatorButton, CreovatorHeader, CreovatorInput } from '@/components/creovator';
+import { CreovatorTheme } from '@/constants/theme';
+import { supabase } from '@/lib/supabase';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { useResponsive } from '@/constants/useResponsive';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '@/lib/supabase';
-import { CreovatorTheme } from '@/constants/theme';
-import { CreovatorHeader, CreovatorInput, CreovatorButton } from '@/components/creovator';
 
 const CATEGORIES = [
   { key: 'tech', label: 'Tech Event', icon: 'laptop-outline' },
@@ -25,6 +26,7 @@ const CATEGORIES = [
 
 export default function CreateEventScreen() {
   const router = useRouter();
+  const r = useResponsive();
 
   const [name, setName] = useState('');
   const [category, setCategory] = useState('tech');
